@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}Class Result{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>📚 {{ class_display }}</h2>
+    <p>📅 {{ date }}</p>
+
+    {% if already_sent %}
+        <div class="alert warning">
+            ⚠️ Absent SMS already sent for today
+        </div>
+    {% else %}
+        <div class="alert success">
+            ✅ Class started & absent SMS sent successfully
+        </div>
+    {% endif %}
+
+    <div class="stats-grid">
+        <div class="card">
+            <h3>Absent Students</h3>
+            <h1>{{ absent_students|length }}</h1>
+        </div>
+    </div>
+
+    <h3>📌 Absent List</h3>
+
+    {% if absent_students|length == 0 %}
+        <p>🎉 No absent students</p>
+    {% endif %}
+
+    {% for s in absent_students %}
+        <div class="student-card">
+            <h3>{{ s.student_name }}</h3>
+            <p>📞 {{ s.parent_phone }}</p>
+            <span class="badge danger">SMS Sent</span>
+        </div>
+    {% endfor %}
+
+    <br>
+
+    <a href="/classes" class="btn btn-primary">
+        ⬅ Back to Classes
+    </a>
+
+</div>
+
+{% endblock %}

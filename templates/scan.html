@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block title %}
+QR Scan
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Scan Student QR
+    </h2>
+
+    {% if message %}
+
+    <div
+        style="
+        background:#dcfce7;
+        padding:15px;
+        border-radius:10px;
+        margin-bottom:20px;
+        "
+    >
+
+        {{ message }}
+
+    </div>
+
+    {% endif %}
+
+    <!-- QR CAMERA -->
+
+    {% if not scanned %}
+
+    <div id="reader"></div>
+
+    {% endif %}
+
+    <!-- STUDENT DETAILS -->
+
+    {% if student %}
+
+    <div
+        class="student-card"
+        style="margin-top:20px;"
+    >
+
+        <h3>
+
+            {{ student.student_name }}
+
+        </h3>
+
+        <p>
+
+            {{ student.class_display }}
+
+        </p>
+
+        <p>
+
+            Parent:
+            {{ student.parent_name }}
+
+        </p>
+
+        <p>
+
+            Phone:
+            {{ student.parent_phone }}
+
+        </p>
+
+        <p>
+
+            Fee Status:
+            <b>
+                {{ fee_status }}
+            </b>
+
+        </p>
+
+        <!-- BUTTONS -->
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="student_id"
+                value="{{ student.student_id }}"
+            >
+
+            {% if show_paid_button %}
+
+            <button
+                class="btn btn-success"
+                name="action"
+                value="pay"
+                style="margin-top:15px;"
+            >
+
+                Mark As Paid
+
+            </button>
+
+            {% endif %}
+
+            <button
+                class="btn btn-primary"
+                name="action"
+                value="attendance"
+                style="margin-top:15px;"
+            >
+
+                Confirm Attendance
+
+            </button>
+
+        </form>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<!-- QR SCRIPT -->
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+
+function onScanSuccess(decodedText) {
+
+    window.location.href =
+        "/scan?student_id=" + decodedText;
+}
+
+const html5QrCode = new Html5Qrcode(
+    "reader"
+);
+
+Html5Qrcode.getCameras().then(cameras => {
+
+    if (cameras && cameras.length) {
+
+        html5QrCode.start(
+
+            cameras[0].id,
+
+            {
+                fps:10,
+                qrbox:250
+            },
+
+            onScanSuccess
+        );
+    }
+
+});
+
+</script>
+
+{% endblock %}

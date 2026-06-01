@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Login
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            🎓
+        </div>
+
+        <h1 class="auth-title">
+            ClassTrack
+        </h1>
+
+        <p class="auth-subtitle">
+            Tuition Management System
+        </p>
+
+        <form method="POST">
+
+            <div class="auth-group">
+
+                <label class="auth-label">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="auth-input"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+            <div class="auth-group">
+
+                <label class="auth-label">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="auth-input"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+            <button class="auth-btn">
+
+                Login
+
+            </button>
+
+        </form>
+
+        {% if error %}
+
+        <div class="auth-error">
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+        <div class="auth-footer">
+
+            © 2026 ClassTrack
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

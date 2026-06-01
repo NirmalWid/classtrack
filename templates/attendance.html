@@ -1,0 +1,200 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Attendance
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Attendance Dashboard
+    </h2>
+
+    <p style="margin-bottom:20px;">
+        {{ today }}
+    </p>
+
+    <!-- FILTER -->
+
+    <form method="GET">
+
+        <select
+            name="class_id"
+            onchange="this.form.submit()"
+            style="margin-bottom:20px;"
+        >
+
+            <option value="">
+                All Classes
+            </option>
+
+            {% for c in classes %}
+
+            <option
+                value="{{ c.class_id }}"
+
+                {% if selected_class == c.class_id %}
+                selected
+                {% endif %}
+            >
+
+                Grade {{ c.grade }}
+                -
+                {{ c.class_type }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </form>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats-grid">
+
+    <div class="card">
+
+        <h3>
+            Total Students
+        </h3>
+
+        <h1>
+            {{ total_students }}
+        </h1>
+
+    </div>
+
+    <div class="card">
+
+        <h3>
+            Present
+        </h3>
+
+        <h1>
+            {{ total_present }}
+        </h1>
+
+    </div>
+
+    <div class="card">
+
+        <h3>
+            Absent
+        </h3>
+
+        <h1>
+            {{ total_absent }}
+        </h1>
+
+    </div>
+
+</div>
+
+<!-- PRESENT -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Present Students
+    </h2>
+
+    {% if attendance_records %}
+
+        {% for a in attendance_records %}
+
+        <div class="student-card">
+
+            <h3>
+
+                {{ a.student_name }}
+
+            </h3>
+
+            <p>
+
+                {{ a.class_name }}
+
+            </p>
+
+            <p>
+
+                Time:
+                {{ a.time }}
+
+            </p>
+
+            <p>
+
+                Fee:
+                {{ a.fee_status }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No attendance records.
+        </p>
+
+    {% endif %}
+
+</div>
+
+<!-- ABSENT -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Absent Students
+    </h2>
+
+    {% if absent_students %}
+
+        {% for s in absent_students %}
+
+        <div class="student-card">
+
+            <h3>
+
+                {{ s.student_name }}
+
+            </h3>
+
+            <p>
+
+                {{ s.class_display }}
+
+            </p>
+
+            <p>
+
+                Parent:
+                {{ s.parent_phone }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No absent students.
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Student
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Edit Student
+    </h2>
+
+    <form method="POST">
+
+        <!-- STUDENT NAME -->
+
+        <label>
+            Student Name
+        </label>
+
+        <input
+            type="text"
+            name="student_name"
+            value="{{ student.student_name }}"
+            required
+        >
+
+        <!-- CLASS -->
+
+        <label>
+            Select Class
+        </label>
+
+        <select
+            name="class_id"
+            required
+        >
+
+            {% for class_item in classes %}
+
+            <option
+
+                value="{{ class_item.class_id }}"
+
+                {% if student.class_id == class_item.class_id %}
+                    selected
+                {% endif %}
+            >
+
+                Grade {{ class_item.grade }}
+                -
+                {{ class_item.class_type }}
+                -
+                {{ class_item.day }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <!-- PARENT NAME -->
+
+        <label>
+            Parent Name
+        </label>
+
+        <input
+            type="text"
+            name="parent_name"
+            value="{{ student.parent_name }}"
+            required
+        >
+
+        <!-- PARENT PHONE -->
+
+        <label>
+            Parent Phone
+        </label>
+
+        <input
+            type="tel"
+            name="parent_phone"
+            value="{{ student.parent_phone }}"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            required
+        >
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+            style="margin-top:20px;"
+        >
+
+            Update Student
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

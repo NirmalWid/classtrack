@@ -1,0 +1,192 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Fees Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Monthly Fee Dashboard
+    </h2>
+
+    <p style="margin-bottom:20px;">
+        {{ current_month }}
+    </p>
+
+    <!-- FILTER -->
+
+    <form method="GET">
+
+        <select
+            name="class_id"
+            onchange="this.form.submit()"
+        >
+
+            <option value="">
+                All Classes
+            </option>
+
+            {% for c in classes %}
+
+            <option
+                value="{{ c.class_id }}"
+
+                {% if selected_class == c.class_id %}
+                selected
+                {% endif %}
+            >
+
+                Grade {{ c.grade }}
+                -
+                {{ c.class_type }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </form>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats-grid">
+
+    <div class="card">
+
+        <h3>
+            Paid Students
+        </h3>
+
+        <h1>
+            {{ paid_students|length }}
+        </h1>
+
+    </div>
+
+    <div class="card">
+
+        <h3>
+            Unpaid Students
+        </h3>
+
+        <h1>
+            {{ unpaid_students|length }}
+        </h1>
+
+    </div>
+
+    <div class="card">
+
+        <h3>
+            Revenue
+        </h3>
+
+        <h1>
+            Rs {{ total_revenue }}
+        </h1>
+
+    </div>
+
+</div>
+
+<!-- PAID -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Paid Students
+    </h2>
+
+    {% if paid_students %}
+
+        {% for s in paid_students %}
+
+        <div class="student-card">
+
+            <h3>
+
+                {{ s.student_name }}
+
+            </h3>
+
+            <p>
+
+                {{ s.class_display }}
+
+            </p>
+
+            <p>
+
+                Status:
+                Paid
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No paid students.
+        </p>
+
+    {% endif %}
+
+</div>
+
+<!-- UNPAID -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Unpaid Students
+    </h2>
+
+    {% if unpaid_students %}
+
+        {% for s in unpaid_students %}
+
+        <div class="student-card">
+
+            <h3>
+
+                {{ s.student_name }}
+
+            </h3>
+
+            <p>
+
+                {{ s.class_display }}
+
+            </p>
+
+            <p>
+
+                Status:
+                Not Paid
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            All students paid.
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

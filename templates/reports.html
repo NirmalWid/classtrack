@@ -1,0 +1,447 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Reports
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Reports Dashboard
+    </h2>
+
+    <!-- ATTENDANCE REPORT -->
+
+    <h3>
+        Attendance Report
+    </h3>
+
+    <form
+        method="GET"
+        action="/reports"
+        style="margin-bottom:30px;"
+    >
+
+        <input
+            type="hidden"
+            name="report_type"
+            value="attendance"
+        >
+
+        <input
+            type="date"
+            name="from_date"
+            required
+        >
+
+        <input
+            type="date"
+            name="to_date"
+            required
+        >
+
+        <button class="btn btn-primary">
+
+            Preview
+
+        </button>
+
+    </form>
+
+    <!-- FEE REPORT -->
+
+    <h3>
+        Fee Report
+    </h3>
+
+    <form
+        method="GET"
+        action="/reports"
+        style="margin-bottom:30px;"
+    >
+
+        <input
+            type="hidden"
+            name="report_type"
+            value="fees"
+        >
+
+        <input
+            type="month"
+            name="month"
+            required
+        >
+
+        <button class="btn btn-success">
+
+            Preview
+
+        </button>
+
+    </form>
+
+    <!-- CLASS REPORT -->
+
+    <h3>
+        Class Student Report
+    </h3>
+
+    <form
+        method="GET"
+        action="/reports"
+        style="margin-bottom:10px;"
+    >
+
+        <input
+            type="hidden"
+            name="report_type"
+            value="class_students"
+        >
+
+        <select
+            name="class_id"
+            required
+        >
+
+            {% for c in classes %}
+
+            <option value="{{ c.class_id }}">
+
+                Grade {{ c.grade }}
+                -
+                {{ c.class_type }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button class="btn btn-warning">
+
+            Preview
+
+        </button>
+
+    </form>
+
+</div>
+
+<!-- ======================================== -->
+<!-- CLASS STUDENT RESULTS -->
+<!-- ======================================== -->
+
+{% if report_type == "class_students" %}
+
+<div class="card">
+
+    <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+        "
+    >
+
+        <h2>
+            Class Students
+        </h2>
+
+        <a
+
+            href="/export-class-students?class_id={{ class_id }}"
+
+            class="btn btn-warning"
+        >
+
+            Export Excel
+
+        </a>
+
+    </div>
+
+    <p>
+
+        Total Students:
+        {{ class_students|length }}
+
+    </p>
+
+</div>
+
+{% for s in class_students %}
+
+<div class="student-card">
+
+    <h3>
+
+        {{ s.student_name }}
+
+    </h3>
+
+    <p>
+
+        {{ s.class_display }}
+
+    </p>
+
+    <p>
+
+        Parent:
+        {{ s.parent_name }}
+
+    </p>
+
+    <p>
+
+        Phone:
+        {{ s.parent_phone }}
+
+    </p>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+<!-- ======================================== -->
+<!-- ATTENDANCE RESULTS -->
+<!-- ======================================== -->
+
+{% if report_type == "attendance" %}
+
+<div class="card">
+
+    <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+        "
+    >
+
+        <h2>
+            Attendance Preview
+        </h2>
+
+        <a
+
+            href="/export-attendance?from_date={{ from_date }}&to_date={{ to_date }}"
+
+            class="btn btn-primary"
+        >
+
+            Export Excel
+
+        </a>
+
+    </div>
+
+    <p>
+
+        Total Records:
+        {{ attendance_records|length }}
+
+    </p>
+
+</div>
+
+{% for a in attendance_records %}
+
+<div class="student-card">
+
+    <h3>
+
+        {{ a.student_name }}
+
+    </h3>
+
+    <p>
+
+        {{ a.class_name }}
+
+    </p>
+
+    <p>
+
+        Date:
+        {{ a.date }}
+
+    </p>
+
+    <p>
+
+        Time:
+        {{ a.time }}
+
+    </p>
+
+    <p>
+
+        Fee:
+        {{ a.fee_status }}
+
+    </p>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+<!-- ======================================== -->
+<!-- FEES RESULTS -->
+<!-- ======================================== -->
+
+{% if report_type == "fees" %}
+
+<div class="card">
+
+    <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+        "
+    >
+
+        <h2>
+            Fee Preview
+        </h2>
+
+        <a
+
+            href="/export-fees?month={{ month }}"
+
+            class="btn btn-success"
+        >
+
+            Export Excel
+
+        </a>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="card">
+
+            <h3>
+                Paid
+            </h3>
+
+            <h1>
+                {{ paid_students|length }}
+            </h1>
+
+        </div>
+
+        <div class="card">
+
+            <h3>
+                Unpaid
+            </h3>
+
+            <h1>
+                {{ unpaid_students|length }}
+            </h1>
+
+        </div>
+
+        <div class="card">
+
+            <h3>
+                Revenue
+            </h3>
+
+            <h1>
+                Rs {{ total_revenue }}
+            </h1>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PAID STUDENTS -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Paid Students
+    </h2>
+
+    {% for s in paid_students %}
+
+    <div class="student-card">
+
+        <h3>
+
+            {{ s.student_name }}
+
+        </h3>
+
+        <p>
+
+            {{ s.class_display }}
+
+        </p>
+
+        <p>
+
+            Paid
+
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<!-- UNPAID STUDENTS -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Unpaid Students
+    </h2>
+
+    {% for s in unpaid_students %}
+
+    <div class="student-card">
+
+        <h3>
+
+            {{ s.student_name }}
+
+        </h3>
+
+        <p>
+
+            {{ s.class_display }}
+
+        </p>
+
+        <p>
+
+            Not Paid
+
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

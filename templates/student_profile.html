@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Student Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>
+        {{ student.student_name }}
+    </h2>
+
+    <p>
+        {{ student.class_display }}
+    </p>
+
+    <p>
+        Parent:
+        {{ student.parent_name }}
+    </p>
+
+    <p>
+        Phone:
+        {{ student.parent_phone }}
+    </p>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats-grid">
+
+    <div class="card">
+
+        <h3>
+            Attendance Count
+        </h3>
+
+        <h1>
+            {{ total_attendance }}
+        </h1>
+
+    </div>
+
+    <div class="card">
+
+        <h3>
+            Paid Months
+        </h3>
+
+        <h1>
+            {{ total_paid_months }}
+        </h1>
+
+    </div>
+
+</div>
+
+<!-- QR -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Student QR
+    </h2>
+
+    <img
+        src="/qr/{{ student.student_id }}"
+        width="250"
+    >
+
+</div>
+
+<!-- FEES -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Payment History
+    </h2>
+
+    {% if fee_history %}
+
+        {% for f in fee_history %}
+
+        <div class="student-card">
+
+            <h3>
+
+                {{ f.month }}
+
+            </h3>
+
+            <p>
+
+                Status:
+                {{ f.status }}
+
+            </p>
+
+            <p>
+
+                Paid At:
+                {{ f.paid_at }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No payment history.
+        </p>
+
+    {% endif %}
+
+</div>
+
+<!-- ATTENDANCE -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Attendance History
+    </h2>
+
+    {% if attendance_history %}
+
+        {% for a in attendance_history %}
+
+        <div class="student-card">
+
+            <h3>
+
+                {{ a.date }}
+
+            </h3>
+
+            <p>
+
+                Time:
+                {{ a.time }}
+
+            </p>
+
+            <p>
+
+                Fee:
+                {{ a.fee_status }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No attendance history.
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-grid">
+
+    <a href="/classes" class="dashboard-card">
+
+        <h2>Classes</h2>
+
+        <p>
+            Manage all tuition classes.
+        </p>
+
+    </a>
+
+    <a href="/students" class="dashboard-card">
+
+        <h2>Students</h2>
+
+        <p>
+            Add and manage students.
+        </p>
+
+    </a>
+
+    <a href="/scan" class="dashboard-card">
+
+        <h2>QR Attendance</h2>
+
+        <p>
+            Scan QR and mark attendance.
+        </p>
+
+    </a>
+
+    <a href="/attendance" class="dashboard-card">
+
+        <h2>Attendance</h2>
+
+        <p>
+            View attendance reports.
+        </p>
+
+    </a>
+
+    <a href="/fees" class="dashboard-card">
+
+        <h2>Fees</h2>
+
+        <p>
+            Monthly fee dashboard.
+        </p>
+
+    </a>
+
+    <a href="/broadcast" class="dashboard-card">
+
+        <h2>Broadcast</h2>
+
+        <p>
+            Send notices to parents.
+        </p>
+
+    </a>
+
+    <a href="/reports" class="dashboard-card">
+
+        <h2>Reports</h2>
+
+        <p>
+            All required Reports
+        </p>
+
+    </a>
+
+</div>
+
+{% endblock %}

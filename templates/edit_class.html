@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Class
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Edit Class
+    </h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label>Grade</label>
+
+            <input type="text" name="grade" value="{{ class_data.grade }}" required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Class Type</label>
+
+            <select name="class_type" required>
+
+                <option value="Group Class" {% if class_data.class_type=="Group Class" %} selected {% endif %}>
+                    Group Class
+                </option>
+
+                <option value="Common Class" {% if class_data.class_type=="Common Class" %} selected {% endif %}>
+                    Common Class
+                </option>
+
+                <option value="Other" {% if class_data.class_type=="Other" %} selected {% endif %}>
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Class Day</label>
+
+            <select name="class_day" required>
+
+                <option value="Monday" {% if class_data.class_day=="Monday" %} selected {% endif %}>
+                    Monday
+                </option>
+
+                <option value="Tuesday" {% if class_data.class_day=="Tuesday" %} selected {% endif %}>
+                    Tuesday
+                </option>
+
+                <option value="Wednesday" {% if class_data.class_day=="Wednesday" %} selected {% endif %}>
+                    Wednesday
+                </option>
+
+                <option value="Thursday" {% if class_data.class_day=="Thursday" %} selected {% endif %}>
+                    Thursday
+                </option>
+
+                <option value="Friday" {% if class_data.class_day=="Friday" %} selected {% endif %}>
+                    Friday
+                </option>
+
+                <option value="Saturday" {% if class_data.class_day=="Saturday" %} selected {% endif %}>
+                    Saturday
+                </option>
+
+                <option value="Sunday" {% if class_data.class_day=="Sunday" %} selected {% endif %}>
+                    Sunday
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Start Time</label>
+
+            <input type="time" name="start_time" value="{{ class_data.start_time }}" required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>End Time</label>
+
+            <input type="time" name="end_time" value="{{ class_data.end_time }}" required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Monthly Fee
+            </label>
+
+            <input type="number" name="monthly_fee" value="{{ class_data.monthly_fee }}" required>
+
+        </div>
+
+        <button class="btn btn-primary">
+
+            Update Class
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

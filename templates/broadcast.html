@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Broadcast SMS
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Broadcast SMS
+    </h2>
+
+    <form method="POST">
+
+        <!-- CLASS -->
+
+        <div class="form-group">
+
+            <label>
+                Select Class
+            </label>
+
+            <select
+                name="class_id"
+                required
+            >
+
+                <option value="">
+                    Select Class
+                </option>
+
+                {% for c in classes %}
+
+                <option value="{{ c.class_id }}">
+
+                    {{ c.grade }} - {{ c.class_type }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <!-- MESSAGE TYPE -->
+
+        <div class="form-group">
+
+            <label>
+                Message Type
+            </label>
+
+            <select
+                name="message_type"
+                required
+            >
+
+                <option value="cancel">
+                    Cancel Class
+                </option>
+
+                <option value="new">
+                    New Class
+                </option>
+
+                <option value="general">
+                    General Message
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- CUSTOM MESSAGE -->
+
+        <div class="form-group">
+
+            <label>
+                Custom Message (Optional)
+            </label>
+
+            <textarea
+                name="custom_message"
+                rows="4"
+                placeholder="Optional message..."
+            ></textarea>
+
+        </div>
+
+        <button class="btn btn-primary">
+
+            Send Broadcast SMS
+
+        </button>
+
+    </form>
+
+</div>
+
+<!-- RESULT -->
+
+{% if message %}
+
+<div class="card">
+
+    <h3>
+        {{ message }}
+    </h3>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

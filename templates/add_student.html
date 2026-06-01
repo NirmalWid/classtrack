@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Add Student
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+<div class="alert warning">
+    {{ error }}
+</div>
+{% endif %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Add Student
+    </h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label>Student Name</label>
+
+            <input type="text" name="student_name" required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Select Class</label>
+
+            <select name="class_id" required>
+
+                <option value="">
+                    Select Class
+                </option>
+
+                {% for c in classes %}
+
+                <option value="{{ c.class_id }}">
+
+                    Grade {{ c.grade }}
+                    -
+                    {{ c.class_type }}
+                    -
+                    {{ c.class_day }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Parent Name</label>
+
+            <input type="text" name="parent_name" required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Parent Phone</label>
+
+            <input type="tel" name="parent_phone" placeholder="9477XXXXXXX" inputmode="numeric" pattern="[0-9]+"
+                required>
+
+        </div>
+
+        <button class="btn btn-primary">
+
+            Add Student
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

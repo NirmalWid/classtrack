@@ -1,0 +1,207 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Classes
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+<div class="alert warning">
+    {{ error }}
+</div>
+{% endif %}
+
+<!-- =======================================
+REGISTERED CLASSES
+======================================= -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Registered Classes
+    </h2>
+
+    {% if classes %}
+
+        {% for c in classes %}
+
+        <div class="student-card">
+
+            <h3>
+                Grade {{ c.grade }}
+                -
+                {{ c.class_type }}
+            </h3>
+
+            <p>
+                📅 <strong>Day:</strong>
+                {{ c.class_day }}
+            </p>
+
+            <p>
+                🕒 <strong>Time:</strong>
+                {{ c.start_time }}
+                -
+                {{ c.end_time }}
+            </p>
+
+            <p>
+                💰 <strong>Monthly Fee:</strong>
+                Rs. {{ c.monthly_fee }}
+            </p>
+
+            <div class="action-buttons">
+
+                <a href="/edit-class/{{ c.class_id }}"
+                   class="btn btn-secondary">
+                    Edit
+                </a>
+
+                <a href="/delete-class/{{ c.class_id }}"
+                   class="btn btn-danger"
+                   onclick="return confirm('Delete this class?')">
+                    Delete
+                </a>
+
+                <a href="/start-class/{{ c.class_id }}"
+                   class="btn btn-success"
+                   onclick="return confirm('Start this class and notify absent students?')">
+                    Start Class
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="student-card">
+
+            <p>
+                No classes found.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+<!-- =======================================
+ADD NEW CLASS
+======================================= -->
+
+<div class="card">
+
+    <h2 style="margin-bottom:20px;">
+        Add New Class
+    </h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label>Grade</label>
+
+            <input
+                type="text"
+                name="grade"
+                placeholder="Example: 10"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Class Type</label>
+
+            <select name="class_type" required>
+
+                <option value="">
+                    Select Class Type
+                </option>
+
+                <option value="Group Class">
+                    Group Class
+                </option>
+
+                <option value="Common Class">
+                    Common Class
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Class Day</label>
+
+            <select name="class_day" required>
+
+                <option value="">
+                    Select Day
+                </option>
+
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Start Time</label>
+
+            <input
+                type="time"
+                name="start_time"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>End Time</label>
+
+            <input
+                type="time"
+                name="end_time"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Monthly Fee</label>
+
+            <input
+                type="number"
+                name="monthly_fee"
+                placeholder="Example: 2500"
+                required>
+
+        </div>
+
+        <button class="btn btn-primary">
+            Add Class
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

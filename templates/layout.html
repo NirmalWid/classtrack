@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" name="theme-color" content="#99b9ff">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}ClassTrack{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
+
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='classtrack-icon.png') }}">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='classtrack-icon.png') }}">
+
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+</head>
+
+<body>
+
+    <div class="mobile-container">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1 class="logo">
+                    ClassTrack
+                </h1>
+
+                <p class="subtitle">
+                    Tuition Management System
+                </p>
+
+            </div>
+
+            <div>
+
+                <a href="/logout" class="logout-btn">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- PAGE CONTENT -->
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <!-- BOTTOM NAV -->
+
+    <div class="bottom-nav">
+
+        <a href="/">
+            <span>🏠</span>
+            Dashboard
+        </a>
+
+        <a href="/students">
+            <span>👨‍🎓</span>
+            Students
+        </a>
+
+        <a href="/classes">
+            <span>📚</span>
+            Classes
+        </a>
+
+        <a href="/scan">
+            <span>📷</span>
+            Scan
+        </a>
+
+        <a href="/reports">
+            <span>📊</span>
+            Reports
+        </a>
+
+    </div>
+
+    <script>
+
+        // PREVENT FORM RESUBMIT
+
+        if (window.history.replaceState) {
+
+            window.history.replaceState(
+                null,
+                null,
+                window.location.href
+            );
+        }
+
+        // MOBILE APP STYLE HISTORY
+
+        window.onload = function () {
+
+            history.pushState(
+                null,
+                null,
+                location.href
+            );
+
+            window.onpopstate = function () {
+
+                history.go(1);
+
+            };
+
+        };
+
+    </script>
+
+</body>
+
+</html>

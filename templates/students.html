@@ -1,0 +1,160 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Students
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <form method="GET" id="filterForm">
+
+        <div class="form-group">
+
+            <label>Search Student</label>
+
+            <input type="text" name="search" value="{{ search }}" placeholder="Search student...">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Filter By Class</label>
+
+            <select name="class_id" onchange="document.getElementById('filterForm').submit();">
+
+                <option value="">
+                    All Classes
+                </option>
+
+                {% for c in classes %}
+
+                <option value="{{ c.class_id }}" {% if class_filter==c.class_id %} selected {% endif %}>
+
+                    Grade {{ c.grade }}
+                    -
+                    {{ c.class_type }}
+                    -
+                    {{ c.class_day }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+    </form>
+
+</div>
+
+<div style="margin-bottom:20px;">
+
+    <a href="/add-student" class="btn btn-primary">
+        Add Student
+    </a>
+
+</div>
+
+<!-- STUDENTS -->
+
+{% for student in students %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:10px;">
+
+        {{ student.student_name }}
+
+    </h2>
+
+    <p style="margin-bottom:6px;">
+
+        <strong>Class:</strong>
+
+        {{ student.class_display or student.class_name }}
+
+    </p>
+
+    <p style="margin-bottom:6px;">
+
+        <strong>Parent:</strong>
+
+        {{ student.parent_name }}
+
+    </p>
+
+    <p style="margin-bottom:15px;">
+
+        <strong>Phone:</strong>
+
+        {{ student.parent_phone }}
+
+    </p>
+
+    <!-- <img src="/qr/{{ student.student_id }}" style="
+            width:140px;
+            margin-bottom:15px;
+        "> -->
+
+    <div style="
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+    ">
+        <a href="/student/{{ student.student_id }}" class="btn btn-primary">
+            Profile
+        </a>
+
+        <a href="/edit-student/{{ student.student_id }}" class="btn btn-secondary">
+            Edit
+        </a>
+
+        <a href="/delete-student/{{ student.student_id }}" class="btn btn-danger"
+            onclick="return confirm('Delete student?')">
+            Delete
+        </a>
+
+        <a href="/download-qr/{{ student.student_id }}" class="btn btn-success">
+            Download QR
+        </a>
+
+        <a href="https://wa.me/?text={{ request.host_url }}qr/{{ student.student_id }}" target="_blank"
+            class="btn btn-success">
+            Share QR
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+    const searchInput = document.querySelector(
+        'input[name="search"]'
+    );
+
+    searchInput.addEventListener(
+        "keyup",
+        function () {
+
+            clearTimeout(window.searchTimer);
+
+            window.searchTimer = setTimeout(() => {
+
+                document.getElementById(
+                    "filterForm"
+                ).submit();
+
+            }, 400);
+
+        }
+    );
+
+</script>
+
+{% endfor %}
+
+{% endblock %}
