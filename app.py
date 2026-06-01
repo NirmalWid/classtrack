@@ -839,6 +839,26 @@ def student_qr(student_id):
         mimetype="image/png"
     )
 
+# =========================================
+# QR FILE FOR SHARING
+# =========================================
+
+@app.route("/qr-file/<student_id>")
+@login_required
+def qr_file(student_id):
+
+    qr = qrcode.make(student_id)
+
+    img_io = io.BytesIO()
+
+    qr.save(img_io, "PNG")
+
+    img_io.seek(0)
+
+    return send_file(
+        img_io,
+        mimetype="image/png"
+    )
 
 @app.route("/scan", methods=["GET", "POST"])
 @login_required
