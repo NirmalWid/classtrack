@@ -121,10 +121,9 @@ Students
             Download QR
         </a>
 
-        <a href="https://wa.me/?text={{ request.host_url }}qr/{{ student.student_id }}" target="_blank"
-            class="btn btn-success">
+        <button type="button" class="btn btn-success" onclick="shareQR('{{ student.student_id }}')">
             Share QR
-        </a>
+        </button>
 
     </div>
 
@@ -152,6 +151,58 @@ Students
 
         }
     );
+
+    async function shareQR(studentId) {
+
+        try {
+
+            const response = await fetch(
+                "/qr-file/" + studentId
+            );
+
+            const blob = await response.blob();
+
+            const file = new File(
+                [blob],
+                "StudentQR.png",
+                {
+                    type: "image/png"
+                }
+            );
+
+            if (
+                navigator.canShare &&
+                navigator.canShare({
+                    files: [file]
+                })
+            ) {
+
+                await navigator.share({
+
+                    title: "Student QR",
+
+                    text: "Student QR Code",
+
+                    files: [file]
+
+                });
+
+            } else {
+
+                alert(
+                    "Image sharing not supported on this device."
+                );
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to share QR."
+            );
+        }
+    }
 
 </script>
 
