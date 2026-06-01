@@ -14,14 +14,12 @@ QR Scan
 
     {% if message %}
 
-    <div
-        style="
+    <div style="
         background:#dcfce7;
         padding:15px;
         border-radius:10px;
         margin-bottom:20px;
-        "
-    >
+        ">
 
         {{ message }}
 
@@ -41,10 +39,7 @@ QR Scan
 
     {% if student %}
 
-    <div
-        class="student-card"
-        style="margin-top:20px;"
-    >
+    <div class="student-card" style="margin-top:20px;">
 
         <h3>
 
@@ -85,20 +80,11 @@ QR Scan
 
         <form method="POST">
 
-            <input
-                type="hidden"
-                name="student_id"
-                value="{{ student.student_id }}"
-            >
+            <input type="hidden" name="student_id" value="{{ student.student_id }}">
 
             {% if show_paid_button %}
 
-            <button
-                class="btn btn-success"
-                name="action"
-                value="pay"
-                style="margin-top:15px;"
-            >
+            <button class="btn btn-success" name="action" value="pay" style="margin-top:15px;">
 
                 Mark As Paid
 
@@ -106,12 +92,7 @@ QR Scan
 
             {% endif %}
 
-            <button
-                class="btn btn-primary"
-                name="action"
-                value="attendance"
-                style="margin-top:15px;"
-            >
+            <button class="btn btn-primary" name="action" value="attendance" style="margin-top:15px;">
 
                 Confirm Attendance
 
@@ -131,34 +112,45 @@ QR Scan
 
 <script>
 
-function onScanSuccess(decodedText) {
+    const reader = document.getElementById("reader");
 
-    window.location.href =
-        "/scan?student_id=" + decodedText;
-}
+    if (reader) {
 
-const html5QrCode = new Html5Qrcode(
-    "reader"
-);
+        function onScanSuccess(decodedText) {
 
-Html5Qrcode.getCameras().then(cameras => {
+            window.location.href =
+                "/scan?student_id=" + decodedText;
+        }
 
-    if (cameras && cameras.length) {
+        const html5QrCode = new Html5Qrcode(
+            "reader"
+        );
 
         html5QrCode.start(
 
-            cameras[0].id,
+            {
+                facingMode: "environment"
+            },
 
             {
-                fps:10,
-                qrbox:250
+                fps: 10,
+                qrbox: 250
             },
 
             onScanSuccess
-        );
-    }
 
-});
+        ).catch(err => {
+
+            console.log(
+                "Camera Error:",
+                err
+            );
+
+            alert(
+                "Unable to access camera. Please allow camera permission."
+            );
+        });
+    }
 
 </script>
 
