@@ -36,6 +36,7 @@ from openpyxl import Workbook
 
 import os
 
+import json
 
 # =========================================
 # LOAD ENV
@@ -57,7 +58,9 @@ app.secret_key = os.getenv("SECRET_KEY")
 # FIREBASE SETUP
 # =========================================
 
-cred = credentials.Certificate("firebase_key.json")
+firebase_credentials = json.loads(os.environ["FIREBASE_CREDENTIALS"])
+
+cred = credentials.Certificate(firebase_credentials)
 
 firebase_admin.initialize_app(cred)
 
